@@ -1,7 +1,11 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material"
-import { useEffect, useRef } from "react"
+import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material"
+import { useEffect, useRef, useState } from "react"
+import testFile from '../testFile.txt'
 
 const ReportOverview = ({open, setOpen, id}) => {
+
+    const [data, setData] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleClose = () => {
         setOpen(false);
@@ -17,6 +21,20 @@ const ReportOverview = ({open, setOpen, id}) => {
         }
       }
     }, [open]);
+
+    useEffect(() => {
+        // load data here from report 
+        if(open === true) {
+          setIsLoading(true)
+          fetch(testFile)
+          .then(result => result.text())
+          .then(data => {
+            setData(data)
+          })
+          .finally(() => setIsLoading(false))
+        }
+        // eslint-disable-next-line
+    }, [open])
   
     return (
       <div>
@@ -25,21 +43,26 @@ const ReportOverview = ({open, setOpen, id}) => {
             onClose={handleClose}
             scroll='paper'
         >
-            <DialogTitle>CBC Report of id = {id}</DialogTitle>
-            <DialogContent dividers={true}>
+            <DialogTitle>Report</DialogTitle>
+            <DialogContent 
+              dividers={true}
+              sx={{
+                width: '400px',
+                height: '500px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}
+            >
                 <DialogContentText
                     id="scroll-dialog-description"
                     ref={descriptionElementRef}
                     tabIndex={-1}
                 >
-                    {[...new Array(18)]
-                    .map(
-                        () => `Cras mattis consectetur purus sit amet fermentum.
-                                Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-                                Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-                                Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`,
-                    )
-                    .join('\n')}
+                    {!isLoading
+                    ? data
+                    : <CircularProgress/>
+                    }
                 </DialogContentText>
             </DialogContent>
             <DialogActions>

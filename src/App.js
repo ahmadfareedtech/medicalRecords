@@ -13,7 +13,7 @@ function App() {
             sx={{
               marginTop: 10,
               width: '50%',
-              minWidth: 400,
+              minWidth: 520,
             }}
           >
             <PatientsData />
