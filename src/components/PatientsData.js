@@ -1,4 +1,13 @@
-import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import {
+  Button,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 import { useState } from "react";
 import ReportOverview from "./ReportOverview";
 
@@ -15,52 +24,71 @@ import ReportOverview from "./ReportOverview";
 // ];
 
 const row = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35, report: 'CBC' },
-]
+  {
+    id: 1,
+    lastName: "Watson",
+    firstName: "Emma",
+    age: 35,
+    report: "Urinary Test",
+  },
+];
 
 const PatientsData = () => {
-    const [open, setOpen] = useState(false)
-    const [id, setId] = useState(null)
+  const [open, setOpen] = useState(false);
+  const [id, setId] = useState(null);
 
-    const handleClickOpen = (id) => {
-        setId(id)
-        setOpen(true)
-    }
+  const handleClickOpen = (id) => {
+    setId(id);
+    setOpen(true);
+  };
 
-    return (
-        <>
-            <ReportOverview open={open} setOpen={setOpen} id={id}/>
-            <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 400 }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell sx={{ fontWeight: 'bold' }} align="center">First&nbsp;Name</TableCell>
-                  <TableCell sx={{ fontWeight: 'bold' }} align="center">Last&nbsp;Name</TableCell>
-                  <TableCell sx={{ fontWeight: 'bold' }} align="center">Age</TableCell>
-                  <TableCell sx={{ fontWeight: 'bold' }} align="center">Report&nbsp;Name</TableCell>
-                  <TableCell sx={{ fontWeight: 'bold' }} align="center">Link</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {row.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+  return (
+    <>
+      <ReportOverview open={open} setOpen={setOpen} id={id} />
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 400 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell sx={{ fontWeight: "bold" }} align="center">
+                First&nbsp;Name
+              </TableCell>
+              <TableCell sx={{ fontWeight: "bold" }} align="center">
+                Last&nbsp;Name
+              </TableCell>
+              <TableCell sx={{ fontWeight: "bold" }} align="center">
+                Age
+              </TableCell>
+              <TableCell sx={{ fontWeight: "bold" }} align="center">
+                Report&nbsp;Name
+              </TableCell>
+              <TableCell sx={{ fontWeight: "bold" }} align="center"></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {row.map((row) => (
+              <TableRow
+                key={row.id}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell align="center">{row.firstName}</TableCell>
+                <TableCell align="center">{row.lastName}</TableCell>
+                <TableCell align="center">{row.age}</TableCell>
+                <TableCell align="center">{row.report}</TableCell>
+                <TableCell align="center">
+                  <Button
+                    variant="contained"
+                    onClick={handleClickOpen.bind(this, row.id, row.firstName)}
                   >
-                    <TableCell align="center">{row.firstName}</TableCell>
-                    <TableCell align="center">{row.lastName}</TableCell>
-                    <TableCell align="center">{row.age}</TableCell>
-                    <TableCell align="center">{row.report}</TableCell>
-                    <TableCell align="center"> 
-                        <Button variant="contained" onClick={handleClickOpen.bind(this, row.id)}>View Report</Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </>
-    )
-}
+                    View
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
+  );
+};
 
-export default PatientsData
+export default PatientsData;
